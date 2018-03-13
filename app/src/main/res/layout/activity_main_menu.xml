@@ -55,10 +55,10 @@
 
                 <Button
                     android:id="@+id/buttonc1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="87dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="All" />
+                    android:text="Home Improvement" />
 
                 <Button
                     android:id="@+id/button2"
@@ -78,17 +78,17 @@
 
                 <Button
                     android:id="@+id/button3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="83dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="Tutoring" />
 
                 <Button
                     android:id="@+id/button4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="84dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="Transportation" />
             </LinearLayout>
 
             <android.support.constraint.ConstraintLayout
