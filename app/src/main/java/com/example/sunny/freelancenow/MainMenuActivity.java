@@ -2,11 +2,16 @@ package com.example.sunny.freelancenow;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,12 +23,17 @@ import java.net.URLConnection;
 
 public class MainMenuActivity extends Activity{
 
-    TextView txtView = (TextView)findViewById(R.id.txtView);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+
         Button btn = (Button)findViewById(R.id.buttonc1);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -33,12 +43,16 @@ public class MainMenuActivity extends Activity{
             }
         });
 
-        URL url;
+
+
+
+
+    /*    URL url;
 
         try {
             // get URL content
-
-            String a="192.168.56.1";
+            Log.i("test", "1");
+            String a="http://192.168.56.1:8000/info/";
             url = new URL(a);
             URLConnection conn = url.openConnection();
 
@@ -48,17 +62,34 @@ public class MainMenuActivity extends Activity{
 
             String inputLine;
             while ((inputLine = br.readLine()) != null) {
-                System.out.println(inputLine);
-                txtView.setText(inputLine);
+                Log.d("OUTPUT",inputLine);
             }
             br.close();
 
-            System.out.println("Done");
+            Log.d("DONE","done");
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            Log.i("test", "test1");
         } catch (IOException e) {
             e.printStackTrace();
+            Log.i("test", "test2");
+        }
+
+*/
+
+        try {
+            // get URL content
+
+            Document doc = Jsoup.connect("http://www.example.com").get();
+            String text = doc.body().text();
+            Log.i("test", "done");
+            Log.i("OUTPUT",text);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.i("test", "test2");
         }
 
     }
