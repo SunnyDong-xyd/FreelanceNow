@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,6 +22,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MainMenuActivity extends Activity{
@@ -33,8 +38,9 @@ public class MainMenuActivity extends Activity{
             StrictMode.setThreadPolicy(policy);
         }
 
-
+        TextView txtView = (TextView)findViewById(R.id.txtView);
         Button btn = (Button)findViewById(R.id.buttonc1);
+        Button btn2 = (Button)findViewById(R.id.button2);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,18 +84,57 @@ public class MainMenuActivity extends Activity{
 
 */
 
+        String text;
         try {
             // get URL content
 
-            Document doc = Jsoup.connect("http://www.example.com").get();
-            String text = doc.body().text();
-            Log.i("test", "done");
+            Document doc = Jsoup.connect("http://10.217.80.89:8000/info/").get();
+            text = doc.body().text();
+            String[] categoryList = text.split("\\s*,\\s*");
+
             Log.i("OUTPUT",text);
+            btn.setText(categoryList[0]);
+
+            btn2.setText(categoryList[2]);
+
+
+
+        /*
+            for (Element table : doc.select("table")){
+                for (Element rows : table.select("tr")) {
+                    Elements tds = rows.select("td");
+                    text = tds.text();
+                    Log.i("OUTPUT",text);
+                    categoryList = text.split("\\s*,\\s*");
+
+                }
+                Log.i("no",categoryList[0]);
+                String str = categoryList[0];
+                btn.setText(categoryList[0]);
+
+
+                    String L = Integer.toString(categoryList.length);
+                    Log.i("OUTPUT",L);
+                    for (int i=0;i<categoryList.length;i++){
+                        Log.i("OUTPUT",categoryList[i]);
+                        String sample = categoryList[i];
+
+                    }
+
+            }
+            */
+
+
+
+
+            Log.i("test", "done");
+
+
 
 
         } catch (IOException e) {
             e.printStackTrace();
-            Log.i("test", "test2");
+            Log.i("test", "IOExceptionm");
         }
 
     }
