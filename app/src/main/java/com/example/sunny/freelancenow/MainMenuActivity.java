@@ -3,7 +3,6 @@ package com.example.sunny.freelancenow;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,18 +11,8 @@ import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Arrays;
-import java.util.List;
+import java.util.StringJoiner;
 
 
 public class MainMenuActivity extends Activity{
@@ -41,13 +30,8 @@ public class MainMenuActivity extends Activity{
         TextView txtView = (TextView)findViewById(R.id.txtView);
         Button btn = (Button)findViewById(R.id.buttonc1);
         Button btn2 = (Button)findViewById(R.id.button2);
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainMenuActivity.this, CategoryActivity.class));
-            }
-        });
+        Button btn3 = (Button)findViewById(R.id.button3);
+        Button btn4 = (Button)findViewById(R.id.button4);
 
 
 
@@ -87,19 +71,17 @@ public class MainMenuActivity extends Activity{
         String text;
         try {
             // get URL content
-
-            Document doc = Jsoup.connect("http://10.217.80.89:8000/info/").get();
+            final String htmlAddress = "http://130.15.40.111:8000/info/";
+            Document doc = Jsoup.connect(htmlAddress).get();
             text = doc.body().text();
-            String[] categoryList = text.split("\\s*,\\s*");
+            final String[] categoryList = text.split("\\s*,\\s*");
 
             Log.i("OUTPUT",text);
             btn.setText(categoryList[0]);
-
             btn2.setText(categoryList[2]);
-
-
-
-        /*
+            btn3.setText(categoryList[4]);
+            btn4.setText(categoryList[6]);
+         /*
             for (Element table : doc.select("table")){
                 for (Element rows : table.select("tr")) {
                     Elements tds = rows.select("td");
@@ -123,18 +105,61 @@ public class MainMenuActivity extends Activity{
 
             }
             */
-
-
-
-
             Log.i("test", "done");
 
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainMenuActivity.this, CategoryActivity.class);
+                    String joined = htmlAddress + categoryList[1];
+                    Bundle bundle = new Bundle();
+                    bundle.putString("htmlKey",joined);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    //startActivity(new Intent(MainMenuActivity.this, CategoryActivity.class));
+                }
+            });
 
 
+            btn2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainMenuActivity.this, CategoryActivity.class);
+                    String joined = htmlAddress + categoryList[3];
+                    Bundle bundle = new Bundle();
+                    bundle.putString("htmlKey",joined);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+
+            btn3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainMenuActivity.this, CategoryActivity.class);
+                    String joined = htmlAddress + categoryList[5];
+                    Bundle bundle = new Bundle();
+                    bundle.putString("htmlKey",joined);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+
+            btn4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainMenuActivity.this, CategoryActivity.class);
+                    String joined = htmlAddress + categoryList[7];
+                    Bundle bundle = new Bundle();
+                    bundle.putString("htmlKey",joined);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
 
         } catch (IOException e) {
             e.printStackTrace();
-            Log.i("test", "IOExceptionm");
+            Log.i("test", "IOException Error");
         }
 
     }
