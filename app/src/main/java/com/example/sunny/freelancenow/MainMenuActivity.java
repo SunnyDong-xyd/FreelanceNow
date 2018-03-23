@@ -12,7 +12,7 @@ import android.widget.TextView;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import java.io.IOException;
-import java.util.StringJoiner;
+
 
 
 public class MainMenuActivity extends Activity{
@@ -22,10 +22,8 @@ public class MainMenuActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-        }
 
         TextView txtView = (TextView)findViewById(R.id.txtView);
         Button btn = (Button)findViewById(R.id.buttonc1);
