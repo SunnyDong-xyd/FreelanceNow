@@ -27,7 +27,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         //Fetch bundle from MainMenuActivity
         Bundle bundle = getIntent().getExtras();
-        String html = bundle.getString("htmlKey");
+        final String html = bundle.getString("htmlKey");
         //Perm XML variable Definition
         TextView txtView = (TextView)findViewById(R.id.title_text);
         //Temp? XML variable definition
@@ -69,6 +69,43 @@ public class CategoryActivity extends AppCompatActivity {
 
 
             Log.i("test", "done");
+
+            btn1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(CategoryActivity.this, ProfileActivity.class);
+                    String joined = html + "/1/";
+                    Bundle bundle = new Bundle();
+                    bundle.putString("htmlKey",joined);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    //startActivity(new Intent(MainMenuActivity.this, CategoryActivity.class));
+                }
+            });
+            btn2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(CategoryActivity.this, ProfileActivity.class);
+                    String joined = html + "/2/";
+                    Bundle bundle = new Bundle();
+                    bundle.putString("htmlKey",joined);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    //startActivity(new Intent(MainMenuActivity.this, CategoryActivity.class));
+                }
+            });
+            btn3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(CategoryActivity.this, ProfileActivity.class);
+                    String joined = html + "/3/";
+                    Bundle bundle = new Bundle();
+                    bundle.putString("htmlKey",joined);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    //startActivity(new Intent(MainMenuActivity.this, CategoryActivity.class));
+                }
+            });
 
 
         } catch (IOException e) {
