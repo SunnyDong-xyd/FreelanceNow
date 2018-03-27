@@ -25,11 +25,11 @@ public class MainMenuActivity extends Activity{
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-        TextView txtView = (TextView)findViewById(R.id.txtView);
-        Button btn = (Button)findViewById(R.id.buttonc1);
-        Button btn2 = (Button)findViewById(R.id.button2);
-        Button btn3 = (Button)findViewById(R.id.button3);
-        Button btn4 = (Button)findViewById(R.id.button4);
+        TextView txtView = findViewById(R.id.txtView);
+        Button btn = findViewById(R.id.buttonc1);
+        Button btn2 = findViewById(R.id.button2);
+        Button btn3 = findViewById(R.id.button3);
+        Button btn4 = findViewById(R.id.button4);
 
 
 
@@ -69,7 +69,7 @@ public class MainMenuActivity extends Activity{
         String text;
         try {
             // get URL content
-            final String htmlAddress = "http://130.15.40.111:8000/info/";
+            final String htmlAddress = "http://10.217.128.243:8000/info/";
             Document doc = Jsoup.connect(htmlAddress).get();
             text = doc.body().text();
             final String[] categoryList = text.split("\\s*,\\s*");

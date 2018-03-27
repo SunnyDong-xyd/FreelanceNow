@@ -1,17 +1,18 @@
 package com.example.sunny.freelancenow;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -29,20 +30,15 @@ public class CategoryActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final String html = bundle.getString("htmlKey");
         //Perm XML variable Definition
-        TextView txtView = (TextView)findViewById(R.id.title_text);
-        //Temp? XML variable definition
-        Button btn1 = (Button)findViewById(R.id.b1_button);
-        TextView txtViewD1 = (TextView)findViewById(R.id.d1_text);
-        Button btn2 = (Button)findViewById(R.id.b2_button);
-        TextView txtViewD2 = (TextView)findViewById(R.id.d2_text);
-        Button btn3 = (Button)findViewById(R.id.b3_button);
-        TextView txtViewD3 = (TextView)findViewById(R.id.d3_text);
-
         Log.i("bundled html address",html);
-        txtView.setText(html);
-
         //other variable definition
         String text;
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        LinearLayout ll = findViewById(R.id.layout);
 
 
         try {
@@ -50,62 +46,45 @@ public class CategoryActivity extends AppCompatActivity {
             Document doc = Jsoup.connect(html).get();
             text = doc.body().text();
             Log.i("OUTPUT",text);
-
             final String[] profileList = text.split("\\s*,\\s*");
 
-            btn1.setText(profileList[0]);
-            txtViewD1.setText(profileList[1]);
-            btn2.setText(profileList[2]);
-            txtViewD2.setText(profileList[3]);
-            btn3.setText(profileList[4]);
-            txtViewD3.setText(profileList[5]);
+            for (int i = 0; i< profileList.length;i=i+2){
+                int profileIndex = i/2;
+                final int professionIndex = (i/2)+1;
+                //Dynamically Create Button (Properties)
+                Button btn = new Button (this);
+                btn.setId(profileIndex);
+                final int id_ = btn.getId();
+                btn.setText(profileList[i]);
+                btn.setBackgroundColor(Color.rgb(232,238,247));
+
+                //Dynamically Create TextView
+                TextView txt = new TextView(this);
+                txt.setId(professionIndex);
+                final int id_t = txt.getId();
+                txt.setText(profileList[i+1]);
+
+                //Add created elements to ll
+                ll.addView(btn,params);
+                ll.addView(txt,params);
 
 
-            /*for(int i=0;i<profileList.length;i++);
-            {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(CategoryActivity.this, ProfileActivity.class);
+                        String joined = html + "/" + professionIndex + "/";
+                        Bundle bundle = new Bundle();
+                        bundle.putString("htmlKey",joined);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                });
 
             }
-            */
 
 
-            Log.i("test", "done");
 
-            btn1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(CategoryActivity.this, ProfileActivity.class);
-                    String joined = html + "/1/";
-                    Bundle bundle = new Bundle();
-                    bundle.putString("htmlKey",joined);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    //startActivity(new Intent(MainMenuActivity.this, CategoryActivity.class));
-                }
-            });
-            btn2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(CategoryActivity.this, ProfileActivity.class);
-                    String joined = html + "/2/";
-                    Bundle bundle = new Bundle();
-                    bundle.putString("htmlKey",joined);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    //startActivity(new Intent(MainMenuActivity.this, CategoryActivity.class));
-                }
-            });
-            btn3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(CategoryActivity.this, ProfileActivity.class);
-                    String joined = html + "/3/";
-                    Bundle bundle = new Bundle();
-                    bundle.putString("htmlKey",joined);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    //startActivity(new Intent(MainMenuActivity.this, CategoryActivity.class));
-                }
-            });
 
 
         } catch (IOException e) {
