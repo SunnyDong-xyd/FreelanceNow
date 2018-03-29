@@ -48,9 +48,12 @@ public class CategoryActivity extends AppCompatActivity {
             Log.i("OUTPUT",text);
             final String[] profileList = text.split("\\s*,\\s*");
 
-            for (int i = 0; i< profileList.length;i=i+2){
-                int profileIndex = i/2;
-                final int professionIndex = (i/2)+1;
+            for (int i = 0; i< profileList.length;i=i+3){
+                int profileIndex = i/3;
+                int professionIndex = (i/3)+1;
+                final int identifierIndex = i+2;
+                final String html2 = profileList[identifierIndex];
+
                 //Dynamically Create Button (Properties)
                 Button btn = new Button (this);
                 btn.setId(profileIndex);
@@ -63,6 +66,7 @@ public class CategoryActivity extends AppCompatActivity {
                 txt.setId(professionIndex);
                 final int id_t = txt.getId();
                 txt.setText(profileList[i+1]);
+                //txt.getLayoutParams().height = 200;
 
                 //Add created elements to ll
                 ll.addView(btn,params);
@@ -73,7 +77,7 @@ public class CategoryActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(CategoryActivity.this, ProfileActivity.class);
-                        String joined = html + "/" + professionIndex + "/";
+                        String joined = html + "/" + html2;
                         Bundle bundle = new Bundle();
                         bundle.putString("htmlKey",joined);
                         intent.putExtras(bundle);

@@ -69,7 +69,7 @@ public class MainMenuActivity extends Activity{
         String text;
         try {
             // get URL content
-            final String htmlAddress = "http://10.217.128.243:8000/info/";
+            final String htmlAddress = "http://130.15.43.232:8000/info/";
             Document doc = Jsoup.connect(htmlAddress).get();
             text = doc.body().text();
             final String[] categoryList = text.split("\\s*,\\s*");
